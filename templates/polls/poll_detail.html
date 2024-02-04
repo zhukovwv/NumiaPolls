@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ poll.title }}</title>
+    <style>
+        .question-list {
+    list-style-type: none;
+    padding: 0;
+}
+
+.question-item {
+    margin-bottom: 20px;
+    background-color: #f9f9f9; /* Добавлен фон для вопроса */
+    padding: 15px; /* Добавлен внутренний отступ для вопроса */
+    border-radius: 8px; /* Скругление углов для вопроса */
+    border: 1px solid #ddd; /* Граница для вопроса */
+}
+
+.question-title {
+    font-size: 1.2em;
+    font-weight: bold;
+    color: #007BFF;
+    margin-bottom: 10px; /* Увеличен отступ между заголовком вопроса и вариантами ответа */
+}
+
+.choice-list {
+    list-style-type: none;
+    padding: 0;
+    margin-top: 10px;
+}
+
+.choice-item {
+    margin-bottom: 10px;
+}
+        .poll-details-content {
+    padding: 20px;
+    background-color: #fff; /* Добавлен фон для контента опроса */
+    border-radius: 0 0 8px 8px; /* Изменен радиус скругления для контента опроса */
+}
+
+.question-list {
+    list-style-type: none;
+    padding: 0;
+}
+
+.question-item {
+    margin-bottom: 20px;
+}
+
+.question-title {
+    font-size: 1.2em;
+    font-weight: bold;
+    color: #007BFF; /* Цвет заголовка вопроса */
+}
+
+.choice-list {
+    list-style-type: none;
+    padding: 0;
+    margin-top: 10px;
+}
+
+.choice-item {
+    margin-bottom: 10px;
+}
+        button {
+        display: inline-block;
+        padding: 10px 20px;
+        font-size: 16px;
+        font-weight: bold;
+        text-align: center;
+        text-decoration: none;
+        background-color: #007BFF;
+        color: #fff;
+        border: 1px solid #007BFF;
+        border-radius: 4px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
+
+    button:hover {
+        background-color: #0056b3;
+    }
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+
+        .poll-details {
+            width: 60%;
+            margin: 30px auto;
+            background-color: #fff;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .poll-details-header {
+            background-color: #007BFF;
+            color: #fff;
+            padding: 15px;
+            text-align: center;
+            border-bottom: 1px solid #ddd;
+            border-radius: 8px 8px 0 0;
+        }
+
+        .poll-details-content {
+            padding: 20px;
+        }
+
+        .question-list {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .question-item {
+            margin-bottom: 20px;
+        }
+
+        .question-title {
+            font-size: 1.2em;
+            font-weight: bold;
+        }
+
+        .choice-list {
+            list-style-type: none;
+            padding: 0;
+            margin-top: 10px;
+        }
+
+        .choice-item {
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="poll-details">
+        <div class="poll-details-header">
+            <h1>{{ poll.title }}</h1>
+        </div>
+        <div class="poll-details-content">
+            <p>{{ poll.description }}</p>
+            <h2>Questions</h2>
+                    <form method="post" action="{% url 'polls:poll_detail' poll.id %}">
+            {% csrf_token %}
+            <ul class="question-list">
+                {% for question in questions %}
+                    <li class="question-item">
+                        <p class="question-title">{{ question.question_text }}</p>
+                        <ul class="choice-list">
+                            {% for choice in question.choice_set.all %}
+                                <li class="choice-item">
+                                    <label>
+                                        <input type="radio" name="question_{{ question.id }}" value="{{ choice.id }}">
+                                        {{ choice.choice_text }}
+                                    </label>
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    </li>
+                {% endfor %}
+            </ul>
+            <button type="submit">Submit</button>
+        </form>
+        </div>
+    </div>
+</body>
+</html>
