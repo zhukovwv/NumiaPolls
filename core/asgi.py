@@ -1,5 +1,5 @@
 """
-ASGI config for NumiaQuestionnaire project.
+ASGI config for NumiaPolls project.
 
 It exposes the ASGI callable as a module-level variable named ``application``.
 
