@@ -1,7 +1,7 @@
 # NumiaPolls Project
 George Zhukov, 2024
 
-To run NumiaPolls app backend do the following:
+To run local NumiaPolls app backend do the following:
 
 ```bash
 cd NumiaPolls
@@ -10,7 +10,11 @@ python manage.py makemigrations
 python manage.py migrate
 python manage.py runserver
 ```
-
+To run  NumiaPolls app backend with Gunicorn + Nginx do the following:
+```bash
+sudo docker build -t django-image:latest .
+sudo docker-compose up                    
+```
 -- Общее количество участников опроса
 ```sql
 SELECT COUNT(DISTINCT user_id) AS total_participants
