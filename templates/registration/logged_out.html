@@ -1,0 +1,70 @@
+<!-- registration/logged_out.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Метатеги и стили (если нужны) -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Logged Out - NumiaPolls</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+
+        .header {
+            background-color: #007BFF;
+            color: #fff;
+            padding: 15px;
+            text-align: center;
+            border-bottom: 1px solid #ddd;
+            border-radius: 8px 8px 0 0;
+        }
+
+        .message {
+            width: 60%;
+            margin: 30px auto;
+            background-color: #fff;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            text-align: center;
+        }
+
+        .message h2 {
+            margin-bottom: 20px;
+        }
+
+        .back-to-home {
+            display: block;
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .back-to-home a {
+            text-decoration: none;
+            color: #007BFF;
+            font-weight: bold;
+        }
+
+        .back-to-home a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>NumiaPolls</h1>
+    </div>
+    <div class="message">
+        <h2>You have been successfully logged out.</h2>
+        <p>Thank you for using NumiaPolls. If you'd like to take more polls, feel free to explore our site.</p>
+        <div class="back-to-home">
+            <a href="{% url 'polls:poll_list' %}">Back to Polls</a>
+        </div>
+    </div>
+</body>
+</html>
