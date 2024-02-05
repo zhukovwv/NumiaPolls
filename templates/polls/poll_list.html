@@ -59,6 +59,11 @@
 <body>
     <div class="header">
         <h1>NumiaPolls</h1>
+        {% if user.is_authenticated %}
+        <p>Welcome, {{ user.username }}! <a href="{% url 'logout' %}">Logout</a></p>
+        {% else %}
+        <p><a href="{% url 'login' %}">Login</a> | <a href="{% url 'polls:signup' %}">Signup</a></p>
+        {% endif %}
     </div>
     <table class="polls-table">
         <thead>
