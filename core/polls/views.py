@@ -1,6 +1,23 @@
+from django.contrib.auth import login
+from django.contrib.auth.forms import UserCreationForm
 from django.shortcuts import render, get_object_or_404, redirect
+from django.urls import reverse
+
 from .models import Poll, Question, Choice, UserResponse
 from .forms import ResponseForm
+
+
+def signup(request):
+    if request.method == 'POST':
+        form = UserCreationForm(request.POST)
+        if form.is_valid():
+            user = form.save()
+            login(request, user, backend='django.contrib.auth.backends.ModelBackend')
+            return redirect(reverse('polls:poll_list'))
+    else:
+        form = UserCreationForm()
+
+    return render(request, 'registration/signup.html', {'form': form})
 
 
 def poll_list(request):
@@ -20,22 +37,15 @@ def poll_detail(request, poll_id):
                 choice_id = form.cleaned_data[f'question_{question.id}']
                 choice = get_object_or_404(Choice, pk=choice_id)
 
-                # Create or update UserResponse
-                user_response, created = UserResponse.objects.get_or_create(
+                user_response, created = UserResponse.objects.update_or_create(
                     user=request.user,
                     question=question,
                     defaults={'choice': choice}
                 )
 
-                if not created:
-                    user_response.choice = choice
-                    user_response.save()
-
-                # Increment votes for the selected choice
                 choice.votes += 1
                 choice.save()
 
-            # Redirect or render success message
-            return redirect('polls:poll_list')
+            return redirect(reverse('polls:poll_list'))
 
     return render(request, 'polls/poll_detail.html', {'poll': poll, 'questions': questions, 'form': form})
