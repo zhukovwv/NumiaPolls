@@ -1,0 +1,87 @@
+<!-- polls/templates/polls/poll_list.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Polls List</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+
+        .header {
+            background-color: #007BFF;
+            color: #fff;
+            padding: 15px;
+            text-align: center;
+            border-bottom: 1px solid #ddd;
+            border-radius: 8px 8px 0 0;
+        }
+
+        .polls-table {
+            width: 80%;
+            margin: 30px auto;
+            background-color: #fff;
+            border-collapse: collapse;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .polls-table th, .polls-table td {
+            border: 1px solid #ddd;
+            padding: 15px;
+            text-align: left;
+        }
+
+        .polls-table th {
+            background-color: #007BFF;
+            color: #fff;
+        }
+
+        .polls-table tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+
+        .polls-table a {
+            text-decoration: none;
+            color: #007BFF;
+            font-weight: bold;
+        }
+
+        .polls-table a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>NumiaPolls</h1>
+        {% if user.is_authenticated %}
+        <p>Welcome, {{ user.username }}! <a href="{% url 'logout' %}">Logout</a></p>
+        {% else %}
+        <p><a href="{% url 'login' %}">Login</a> | <a href="{% url 'polls:signup' %}">Signup</a></p>
+        {% endif %}
+    </div>
+    <table class="polls-table">
+        <thead>
+            <tr>
+                <th>Poll</th>
+                <th>About what?</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for poll in polls %}
+                <tr>
+                    <td>{{ poll.title }}</td>
+                    <td>{{ poll.description }}</td>
+                    <td><a href="{% url 'polls:poll_detail' poll.id %}">Take Poll</a></td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>

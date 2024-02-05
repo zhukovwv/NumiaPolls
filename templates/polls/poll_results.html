@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ poll.title }} - Results</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+
+        .header {
+            background-color: #007BFF;
+            color: #fff;
+            padding: 15px;
+            text-align: center;
+            border-bottom: 1px solid #ddd;
+            border-radius: 8px 8px 0 0;
+        }
+
+        .poll-results {
+            width: 60%;
+            margin: 30px auto;
+            background-color: #fff;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .poll-results-content {
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 0 0 8px 8px;
+            border: 1px solid #ddd;
+        }
+
+        .question-list {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .question-item {
+            margin-bottom: 20px;
+            background-color: #f9f9f9;
+            padding: 15px;
+            border-radius: 8px;
+            border: 1px solid #ddd;
+        }
+
+        .question-title {
+            font-size: 1.2em;
+            font-weight: bold;
+            color: #007BFF;
+            margin-bottom: 10px;
+        }
+
+        .choice-list {
+            list-style-type: none;
+            padding: 0;
+            margin-top: 10px;
+        }
+
+        .choice-item {
+            margin-bottom: 10px;
+        }
+
+        button {
+            display: inline-block;
+            padding: 10px 20px;
+            font-size: 16px;
+            font-weight: bold;
+            text-align: center;
+            text-decoration: none;
+            background-color: #007BFF;
+            color: #fff;
+            border: 1px solid #007BFF;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>NumiaPolls</h1>
+        {% if user.is_authenticated %}
+        <p>Welcome, {{ user.username }}! <a href="{% url 'logout' %}">Logout</a></p>
+        {% else %}
+        <p><a href="{% url 'login' %}">Login</a> | <a href="{% url 'polls:signup' %}">Signup</a></p>
+        {% endif %}
+    </div>
+    <div class="poll-results">
+        <div class="poll-results-content">
+            <h2>{{ poll.title }} - Results</h2>
+            <ul class="question-list">
+                {% for question_stat in question_stats %}
+                    <li class="question-item">
+                        <p class="question-title">{{ question_stat.question_text }}</p>
+                        <ul class="choice-list">
+                            {% for choice_stat in question_stat.choices %}
+                                <li class="choice-item">
+                                    {{ choice_stat.choice_text }}: {{ choice_stat.choice_count }} votes
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    </li>
+                {% endfor %}
+            </ul>
+                    <a href="{% url 'polls:poll_list' %}">
+                <button>Back to Poll List</button>
+            </a>
+        </div>
+    </div>
+</body>
+</html>
