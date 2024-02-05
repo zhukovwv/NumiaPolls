@@ -1,4 +1,5 @@
 from django.contrib.auth import login
+from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import UserCreationForm
 from django.shortcuts import render, get_object_or_404, redirect
 from django.urls import reverse
@@ -25,6 +26,7 @@ def poll_list(request):
     return render(request, 'polls/poll_list.html', {'polls': polls})
 
 
+@login_required
 def poll_detail(request, poll_id):
     poll = get_object_or_404(Poll, pk=poll_id)
     questions = Question.objects.filter(poll=poll)
@@ -37,10 +39,11 @@ def poll_detail(request, poll_id):
                 choice_id = form.cleaned_data[f'question_{question.id}']
                 choice = get_object_or_404(Choice, pk=choice_id)
 
-                user_response, created = UserResponse.objects.update_or_create(
+                UserResponse.objects.create(
                     user=request.user,
                     question=question,
-                    defaults={'choice': choice}
+                    choice=choice,
+                    poll=poll
                 )
 
                 choice.votes += 1

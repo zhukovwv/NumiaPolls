@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Poll, Question, Choice
+from .models import Poll, Question, Choice, UserResponse
 from nested_inline.admin import NestedStackedInline, NestedModelAdmin
 
 
@@ -21,3 +21,12 @@ class PollAdmin(NestedModelAdmin):
 
 
 admin.site.register(Poll, PollAdmin)
+
+
+class UserResponseAdmin(admin.ModelAdmin):
+    list_display = ['user', 'poll', 'question', 'choice']
+    list_filter = ['poll', 'question']
+    search_fields = ['user__username', 'poll__title', 'question__text', 'choice__text']
+    readonly_fields = ['user', 'poll', 'question', 'choice']
+
+admin.site.register(UserResponse, UserResponseAdmin)

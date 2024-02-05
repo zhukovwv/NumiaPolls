@@ -16,8 +16,8 @@ class ResponseForm(forms.Form):
         for question in questions:
             choices = question.choice_set.all()
             self.fields[f'question_{question.id}'] = forms.ChoiceField(
-                choices=[(choice.id, choice.choice_text) for choice in choices],
+                choices=[(choice.id, choice.text) for choice in choices],
                 widget=forms.RadioSelect,
                 required=True,
-                label=question.question_text
+                label=question.text
             )

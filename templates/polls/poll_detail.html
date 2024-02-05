@@ -106,13 +106,13 @@
             <ul class="question-list">
                 {% for question in questions %}
                     <li class="question-item">
-                        <p class="question-title">{{ question.question_text }}</p>
+                        <p class="question-title">{{ question.text }}</p>
                         <ul class="choice-list">
                             {% for choice in question.choice_set.all %}
                                 <li class="choice-item">
                                     <label>
                                         <input type="radio" name="question_{{ question.id }}" value="{{ choice.id }}">
-                                        {{ choice.choice_text }}
+                                        {{ choice.text }}
                                     </label>
                                 </li>
                             {% endfor %}
