@@ -14,7 +14,17 @@ class Poll(models.Model):
 class Question(models.Model):
     poll = models.ForeignKey(Poll, on_delete=models.CASCADE)
     text = models.CharField(max_length=200)
+    """
+    Think about it!
+    
+    parent_question = models.ForeignKey('self', null=True, blank=True, on_delete=models.CASCADE, related_name='child_questions')
+    depends_on_choice = models.ForeignKey('Choice', null=True, blank=True, on_delete=models.CASCADE, related_name='dependent_questions')
 
+    def get_child_questions(self, selected_choice):
+        if self.child_questions.exists() and selected_choice == self.depends_on_choice:
+            return self.child_questions.all()
+        return []
+    """
     def __str__(self):
         return self.text
 
