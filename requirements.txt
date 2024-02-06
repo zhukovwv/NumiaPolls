@@ -1,5 +1,12 @@
 asgiref==3.7.2
+beautifulsoup4==4.12.3
 Django==4.2.9
+django-bootstrap-v5==1.0.11
+django-dark==0.1.9
+django-nested-inline==0.4.6
+gunicorn==21.2.0
+packaging==23.2
 python-dotenv==1.0.1
+soupsieve==2.5
 sqlparse==0.4.4
 typing_extensions==4.9.0
