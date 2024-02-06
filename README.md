@@ -11,6 +11,11 @@ python manage.py migrate
 python manage.py runserver
 ```
 [Visit NumiaPolls local site](http://127.0.0.1:8000/)
+```bash
+# Add 2 simple polls
+python manage.py runserver Add_Polls_for_Test
+```
+
 
 To run  NumiaPolls app backend with Gunicorn + Nginx do the following:
 ```bash
