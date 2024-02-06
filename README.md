@@ -10,14 +10,14 @@ python manage.py makemigrations
 python manage.py migrate
 python manage.py runserver
 ```
-[Visit NumiaPolls local site]([URL](http://127.0.0.1:8000/))
+[Visit NumiaPolls local site](http://127.0.0.1:8000/)
 
 To run  NumiaPolls app backend with Gunicorn + Nginx do the following:
 ```bash
 sudo docker build -t django-image:latest .
 sudo docker-compose up                    
 ```
-[Visit NumiaPolls nginx site]([URL](http://0.0.0.0/))
+[Visit NumiaPolls nginx site](http://0.0.0.0/)
 
 -- Общее количество участников опроса
 ```bash
