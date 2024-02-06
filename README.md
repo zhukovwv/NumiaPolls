@@ -30,8 +30,8 @@ python manage.py SQL_Respondent_Count_and_Share
 ```
 ```sql
 SELECT COUNT(DISTINCT user_id) AS respondents_count,
-       COUNT(DISTINCT user_id) * 100 / (SELECT COUNT(DISTINCT user_id) FROM UserResponse) AS percentage_respondents
-FROM UserResponse;
+       COUNT(DISTINCT user_id) * 100 / (SELECT COUNT(DISTINCT user_id) FROM polls_userresponse) AS percentage_respondents
+FROM polls_userresponse;
 ```
 
 -- Порядковый номер вопроса по количеству ответивших
@@ -40,7 +40,7 @@ python manage.py SQL_Question_Number_by_Respondent_Count
 ```
 ```sql
 SELECT question_id, RANK() OVER (ORDER BY COUNT(DISTINCT user_id) DESC) AS question_rank
-FROM UserResponse
+FROM polls_userresponse
 GROUP BY question_id;
 ```
 
@@ -51,8 +51,8 @@ python manage.py SQL_Respondents_Per_Answer_Option_and_Share
 ```sql
 SELECT question_id, choice_id,
        COUNT(DISTINCT user_id) AS respondents_count,
-       COUNT(DISTINCT user_id) * 100 / (SELECT COUNT(DISTINCT user_id) FROM UserResponse WHERE question_id = qr.question_id) AS percentage_respondents
-FROM UserResponse qr
+       COUNT(DISTINCT user_id) * 100 / (SELECT COUNT(DISTINCT user_id) FROM polls_userresponse WHERE question_id = qr.question_id) AS percentage_respondents
+FROM polls_userresponse qr
 GROUP BY question_id, choice_id;
 ```
 
