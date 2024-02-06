@@ -21,43 +21,26 @@ SELECT COUNT(DISTINCT user_id) AS total_participants
 FROM polls_userresponse;
 ```
 
--- Для каждого вопроса
+-- Количество ответивших и их доля
 ```sql
-SELECT
-    question_id,
-    COUNT(DISTINCT user_id) AS participants_count,
-    COUNT(DISTINCT user_id) * 100 / total_participants AS participants_percentage,
-    RANK() OVER (ORDER BY COUNT(DISTINCT user_id) DESC) AS question_rank
-FROM
-    polls_userresponse
-    CROSS JOIN (
-        SELECT COUNT(DISTINCT user_id) AS total_participants
-        FROM polls_userresponse
-    ) AS total_counts
-GROUP BY
-    question_id
-ORDER BY
-    question_rank;
+SELECT COUNT(DISTINCT user_id) AS respondents_count,
+       COUNT(DISTINCT user_id) * 100 / (SELECT COUNT(DISTINCT user_id) FROM UserResponse) AS percentage_respondents
+FROM UserResponse;
 ```
 
--- Для каждого варианта ответа на каждый вопрос
+-- Порядковый номер вопроса по количеству ответивших
 ```sql
-SELECT
-    question_id,
-    choice_id,
-    COUNT(DISTINCT user_id) AS participants_count,
-    COUNT(DISTINCT user_id) * 100 / total_participants AS participants_percentage
-FROM
-    polls_userresponse
-    CROSS JOIN (
-        SELECT COUNT(DISTINCT user_id) AS total_participants
-        FROM polls_userresponse
-    ) AS total_counts
-GROUP BY
-    question_id,
-    choice_id
-ORDER BY
-    question_id,
-    participants_count DESC;
+SELECT question_id, RANK() OVER (ORDER BY COUNT(DISTINCT user_id) DESC) AS question_rank
+FROM UserResponse
+GROUP BY question_id;
+```
+
+-- Количество ответивших на каждый из вариантов ответа и их доля:
+```sql
+SELECT question_id, choice_id,
+       COUNT(DISTINCT user_id) AS respondents_count,
+       COUNT(DISTINCT user_id) * 100 / (SELECT COUNT(DISTINCT user_id) FROM UserResponse WHERE question_id = qr.question_id) AS percentage_respondents
+FROM UserResponse qr
+GROUP BY question_id, choice_id;
 ```
 
